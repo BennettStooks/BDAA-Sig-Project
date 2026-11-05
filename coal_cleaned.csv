@@ -1,4 +1,4 @@
-period,location,stateDescription,sector,sectorDescription,ash-content,consumption,heat-content,price,receipts,stocks,sulfur-content,ash-content-units,consumption-units,heat-content-units,price-units,receipts-units,stocks-units,sulfur-content-units
+period,location_code,location_name,sector,sectorDescription,ash-content,consumption,heat-content,price,receipts,stocks,sulfur-content,ash-content-units,consumption-units,heat-content-units,price-units,receipts-units,stocks-units,sulfur-content-units
 2020,90,Pacific,1,Electric Utility,6.3,1541461.0,16.2558,42.25,873007.0,,0.21,average ash percent by weight,short tons,average sulfur percent by weight,dollars per short ton,short tons,short tons,average sulfur percent by weight
 2020,90,Pacific,2,IPP Non-CHP,8.36,3476488.0,16.6534,,3525648.0,,0.4,average ash percent by weight,short tons,average sulfur percent by weight,dollars per short ton,short tons,short tons,average sulfur percent by weight
 2020,90,Pacific,3,IPP CHP,4.92,890674.0,18.636,,725275.0,,0.27,average ash percent by weight,short tons,average sulfur percent by weight,dollars per short ton,short tons,short tons,average sulfur percent by weight
