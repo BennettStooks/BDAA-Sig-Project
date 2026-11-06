@@ -67,42 +67,4 @@ print("R-squared:", round(model.rsquared, 4))
 with open(base_dir / "ols_results.txt", "w") as f:
     f.write(model.summary().as_text())
 
-# 9. Create regression coefficient graph
-variables = [
-    "price",
-    'Q("heat-content")',
-    'Q("sulfur-content")',
-    'Q("ash-content")'
-]
-
-labels = [
-    "Coal Price",
-    "Heat Content",
-    "Sulfur Content",
-    "Ash Content"
-]
-
-coefficients = model.params[variables]
-intervals = model.conf_int().loc[variables]
-
-lower_error = coefficients.values - intervals[0].values
-upper_error = intervals[1].values - coefficients.values
-
-fig, ax = plt.subplots(figsize=(9, 5))
-
-ax.errorbar(
-    coefficients.values,
-    labels,
-    xerr=[lower_error, upper_error],
-    fmt="o",
-    capsize=4
-)
-
-ax.axvline(0, linestyle="--", color="gray")
-ax.set_xlabel("OLS Coefficient (95% Confidence Interval)")
-ax.set_title("Coal Consumption: OLS Regression Results")
-
-plt.tight_layout()
-plt.savefig(base_dir / "ols_coefficients.png", dpi=300)
-plt.show()
 
