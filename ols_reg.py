@@ -2,7 +2,7 @@
 import pandas as pd
 import numpy as np
 import statsmodels.formula.api as smf
-
+from pathlib import Path
 
 # 1. Load cleaned dataset
 base_dir = Path(__file__).resolve().parent
@@ -66,4 +66,93 @@ print("R-squared:", round(model.rsquared, 4))
 with open(base_dir / "ols_results.txt", "w") as f:
     f.write(model.summary().as_text())
 
+#Export model results for Tableau
+tableau_df = model_df.loc[model.fittedvalues.index].copy()
 
+tableau_df["actual_log_consumption"] = (tableau_df["log_consumption"])
+
+tableau_df["predicted_log_consumption"] = (
+    model.fittedvalues
+)
+tableau_df["residual"] = model.resid
+
+# 10. ADJUSTED PRICE VS CONSUMPTION
+# ==========================================
+
+# Remove the effect of quality, state, and year
+# from both price and log consumption.
+
+controls = (
+    'Q("heat-content")'
+    ' + Q("sulfur-content")'
+    ' + Q("ash-content")'
+    ' + C(location_code)'
+    ' + C(period)'
+)
+
+adjusted_y = smf.ols(
+    "log_consumption ~ " + controls,
+    data=tableau_df
+).fit()
+
+adjusted_x = smf.ols(
+    "price ~ " + controls,
+    data=tableau_df
+).fit()
+
+tableau_df["adjusted_consumption"] = (
+    adjusted_y.resid
+)
+
+tableau_df["adjusted_price"] = (
+    adjusted_x.resid
+)
+
+# Save observations for Tableau graphs 8, 9, 10
+tableau_df.to_csv(
+    base_dir / "tableau_ols_observations.csv",
+    index=False
+)
+
+# ==========================================
+# 11. COEFFICIENTS AND CONFIDENCE INTERVALS
+# ==========================================
+
+variables = {
+    "price": "Coal Price",
+    'Q("heat-content")': "Heat Content",
+    'Q("sulfur-content")': "Sulfur Content",
+    'Q("ash-content")': "Ash Content"
+}
+
+results = []
+
+for variable, label in variables.items():
+
+    beta = model.params[variable]
+    lower, upper = model.conf_int().loc[variable]
+
+    # Express the effect for a 1-SD increase
+    # so predictors are more comparable.
+    original_column = (
+        variable.replace('Q("', '').replace('")', '')
+    )
+    sd = tableau_df[original_column].std()
+
+    results.append({
+        "Variable": label,
+        "Coefficient": beta,
+        "P_value": model.pvalues[variable],
+        "Standardized_effect": beta * sd,
+        "Lower_CI": lower * sd,
+        "Upper_CI": upper * sd,
+    })
+
+coef_df = pd.DataFrame(results)
+
+coef_df.to_csv(
+    base_dir / "tableau_ols_coefficients.csv",
+    index=False
+)
+
+print("Tableau export files created successfully!")
