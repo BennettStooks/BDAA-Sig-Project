@@ -31,3 +31,5 @@ df = df.drop_duplicates().reset_index(drop=True)
 
 # Save cleaned data separately
 df.to_csv("coal_cleaned.csv", index=False)
+
+print("Yo chat, I did it!")
