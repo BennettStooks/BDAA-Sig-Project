@@ -2,8 +2,7 @@
 import pandas as pd
 import numpy as np
 import statsmodels.formula.api as smf
-import matplotlib.pyplot as plt
-from pathlib import Path
+
 
 # 1. Load cleaned dataset
 base_dir = Path(__file__).resolve().parent
