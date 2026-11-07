@@ -4,12 +4,12 @@ import numpy as np
 import statsmodels.formula.api as smf
 from pathlib import Path
 
-# 1. Load cleaned dataset
+#Loading cleaned dataset
 base_dir = Path(__file__).resolve().parent
 df = pd.read_csv(base_dir / "coal_cleaned.csv")
 
-# 2. Keep state-level observations only
-# Exclude U.S. and regional totals to avoid duplication
+#Keep state-level observations only
+#Exclude U.S. and regional totals to avoid duplication
 state_codes = set("""
 AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA
 ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH
@@ -18,10 +18,10 @@ OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY DC
 
 df = df[df["location_code"].isin(state_codes)].copy()
 
-# 3. Focus on Electric Utility (sector 1)
+#Focus on Electric Utility (sector 1)
 df = df[df["sector"] == 1].copy()
 
-# 4. Remove invalid and missing model observations
+#Remove invalid and missing model observations
 predictors = [
     "price", "heat-content",
     "sulfur-content", "ash-content"
@@ -37,12 +37,12 @@ model_df = model_df[
     (model_df["heat-content"] > 0)
 ].copy()
 
-# 5. Log transform consumption
+#Log transform consumption
 model_df["log_consumption"] = np.log(
     model_df["consumption"]
 )
 
-# 6. Fit OLS with state and year controls
+#Fitting OLS with state and year controls
 formula = (
     'log_consumption ~ price'
     ' + Q("heat-content")'
@@ -57,12 +57,12 @@ model = smf.ols(
     data=model_df
 ).fit(cov_type="HC3")
 
-# 7. Display results
+#Displaying results
 print(model.summary())
 print("Observations:", int(model.nobs))
 print("R-squared:", round(model.rsquared, 4))
 
-# 8. Save regression summary
+# Saving regression summary
 with open(base_dir / "ols_results.txt", "w") as f:
     f.write(model.summary().as_text())
 
@@ -76,12 +76,7 @@ tableau_df["predicted_log_consumption"] = (
 )
 tableau_df["residual"] = model.resid
 
-# 10. ADJUSTED PRICE VS CONSUMPTION
-# ==========================================
-
-# Remove the effect of quality, state, and year
-# from both price and log consumption.
-
+#Adjusted Price vs Consumptions
 controls = (
     'Q("heat-content")'
     ' + Q("sulfur-content")'
@@ -114,10 +109,8 @@ tableau_df.to_csv(
     index=False
 )
 
-# ==========================================
-# 11. COEFFICIENTS AND CONFIDENCE INTERVALS
-# ==========================================
 
+#Coefficients and Confidence Intervals
 variables = {
     "price": "Coal Price",
     'Q("heat-content")': "Heat Content",
