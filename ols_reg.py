@@ -22,7 +22,7 @@ df = df[df["location_code"].isin(state_codes)].copy()
 df = df[df["sector"] == 1].copy()
 
 #Remove invalid and missing model observations
-predictors = [
+predictors = [ 
     "price", "heat-content",
     "sulfur-content", "ash-content"
 ]

@@ -2,9 +2,9 @@
 ==============================================================================
 Dep. Variable:        log_consumption   R-squared:                       0.989
 Model:                            OLS   Adj. R-squared:                  0.985
-Method:                 Least Squares   F-statistic:                     471.1
-Date:                Thu, 05 Nov 2026   Prob (F-statistic):          4.59e-119
-Time:                        23:58:19   Log-Likelihood:                 112.92
+Method:                 Least Squares   F-statistic:                     471.2
+Date:                Sat, 07 Nov 2026   Prob (F-statistic):          4.53e-119
+Time:                        16:20:23   Log-Likelihood:                 112.92
 No. Observations:                 168   AIC:                            -137.8
 Df Residuals:                     124   BIC:                           -0.3808
 Df Model:                          43                                         
@@ -29,16 +29,16 @@ C(location_code)[T.MI]     3.3744      0.365      9.238      0.000       2.658  
 C(location_code)[T.MN]     2.6845      0.261     10.270      0.000       2.172       3.197
 C(location_code)[T.MO]     3.8814      0.273     14.213      0.000       3.346       4.417
 C(location_code)[T.MS]     0.8287      0.300      2.760      0.006       0.240       1.417
-C(location_code)[T.MT]    -1.0255    248.000     -0.004      0.997    -487.097     485.046
+C(location_code)[T.MT]    -1.0255      8.919     -0.115      0.908     -18.507      16.456
 C(location_code)[T.NC]     2.7603      0.925      2.985      0.003       0.948       4.573
 C(location_code)[T.ND]     3.4390      0.213     16.137      0.000       3.021       3.857
 C(location_code)[T.NE]     2.9560      0.245     12.046      0.000       2.475       3.437
-C(location_code)[T.NH]    -2.0248      5.157     -0.393      0.695     -12.133       8.083
+C(location_code)[T.NH]    -2.0248      2.567     -0.789      0.430      -7.056       3.006
 C(location_code)[T.NM]     2.2342      0.644      3.468      0.001       0.972       3.497
 C(location_code)[T.NV]     0.3984      0.447      0.891      0.373      -0.478       1.275
 C(location_code)[T.OH]     1.5476      1.090      1.419      0.156      -0.590       3.685
 C(location_code)[T.OK]     2.1185      0.256      8.284      0.000       1.617       2.620
-C(location_code)[T.OR]     0.5647     58.286      0.010      0.992    -113.674     114.804
+C(location_code)[T.OR]     0.5647      7.728      0.073      0.942     -14.583      15.712
 C(location_code)[T.SC]     2.6701      0.901      2.963      0.003       0.904       4.437
 C(location_code)[T.SD]     0.7304      0.201      3.627      0.000       0.336       1.125
 C(location_code)[T.TN]     2.8107      0.674      4.169      0.000       1.489       4.132
